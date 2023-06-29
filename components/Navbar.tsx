@@ -16,23 +16,6 @@ const Navbar = () => {
           btnType="button"
           containerStyles="bg-primary-blue text-white rounded-full"
         />
-        {/*         <ul className="flex justify-center items-center">
-          <li>
-            <Link className="" href="">
-              Link
-            </Link>
-          </li>
-          <li>
-            <Link className="" href="">
-              Link
-            </Link>
-          </li>
-          <li>
-            <Link className="" href="">
-              Link
-            </Link>
-          </li>
-        </ul> */}
       </nav>
     </header>
   );
