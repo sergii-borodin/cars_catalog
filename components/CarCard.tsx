@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { CarProps } from "@/types";
 import { calculateCarRent } from "@/utils";
+import { CustomButton, CarDetails } from "@/components";
 
 interface CarCardProps {
   car: CarProps;
@@ -12,17 +13,21 @@ interface CarCardProps {
 const CarCard = ({ car }: CarCardProps) => {
   const { city_mpg, year, make, model, transmission, drive } = car;
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const carRent = calculateCarRent(city_mpg, year);
 
+  const city_kmh = (city_mpg * 0.534).toFixed(1);
+
   return (
-    <div className="car-card group ">
+    <div className="car-card group">
       <div className="car-cardContent">
         <h2 className="car-card__content-title">
           {make} {model}
         </h2>
       </div>
       <p className="flex mt-6 text-[32px] font-extrabold">
-        <span className="self-start text-[14px] font-semibold">$</span>
+        <span className="self-start text-[14px] font-semibold">€</span>
         {carRent}
         <span className="self-end text-[14px]">/day</span>
       </p>
@@ -49,15 +54,29 @@ const CarCard = ({ car }: CarCardProps) => {
             </p>
           </div>
           <div className="car-card__icon">
-            <Image src="/tire.svg" width={20} height={20} alt="seat" />
+            <Image src="/tire.svg" width={20} height={20} alt="car tire" />
             <p className="car-card__icon-text">{drive.toUpperCase()}</p>
           </div>
           <div className="car-card__icon">
-            <Image src="/gas.svg" width={20} height={20} alt="seat" />
-            <p className="car-card__icon-text">{city_mpg} MPG</p>
+            <Image src="/gas.svg" width={20} height={20} alt="gas station" />
+            <p className="car-card__icon-text">{city_kmh} km/h</p>
           </div>
         </div>
+        <div className="car-card__btn-container">
+          <CustomButton
+            title="View More"
+            containerStyles="w-full py-[16px] rounded-full bg-primary-blue"
+            textStyles="text-white text-[14px] leading-[17px] font-bold"
+            rightIcon="/right-arrow.svg"
+            handleClick={() => setIsOpen(true)}
+          />
+        </div>
       </div>
+      <CarDetails
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+        car={car}
+      />
     </div>
   );
 };
