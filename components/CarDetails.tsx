@@ -4,8 +4,7 @@ import Image from "next/image";
 import { Fragment, useEffect } from "react";
 
 import { Dialog, Transition } from "@headlessui/react";
-
-import { fetchCarImage } from "@/utils";
+import { generateCarImageUrl } from "@/utils";
 import { CarProps } from "@/types";
 
 interface CarDetailsProps {
@@ -15,15 +14,6 @@ interface CarDetailsProps {
 }
 
 const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
-  const { model, make } = car;
-  useEffect(() => {
-    async function getCarImage() {
-      const res = await fetchCarImage(model, make);
-      console.log(res);
-    }
-    getCarImage();
-  }, []);
-
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -50,7 +40,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="relative w-full max-w-lg max-h-[90] overflow-y-auto transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex flex-col gap-5">
+                <Dialog.Panel className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex flex-col gap-5">
                   <button
                     type="button"
                     className="absolute top-2 right-2 z-10 w-fit p-2 bg-primary-blue-100 rounded-full"
@@ -67,7 +57,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                   <div className="flex-1 flex flex-col gap-3">
                     <div className="relative w-full h-40 bg-pattern bg-cover bg-bottom rounded-lg">
                       <Image
-                        src="/hero_img.png"
+                        src={generateCarImageUrl(car)}
                         alt="car model"
                         fill
                         priority
@@ -77,7 +67,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                     <div className="flex gap-3">
                       <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
                         <Image
-                          src="/hero_img.png"
+                          src={generateCarImageUrl(car, "29")}
                           alt="car model"
                           fill
                           priority
@@ -86,7 +76,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                       </div>
                       <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
                         <Image
-                          src="/hero_img.png"
+                          src={generateCarImageUrl(car, "33")}
                           alt="car model"
                           fill
                           priority
@@ -95,7 +85,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                       </div>
                       <div className="flex-1 relative w-full h-24 bg-primary-blue-100 rounded-lg">
                         <Image
-                          src="/hero_img.png"
+                          src={generateCarImageUrl(car, "13")}
                           alt="car model"
                           fill
                           priority
@@ -105,7 +95,7 @@ const CarDetails = ({ isOpen, closeModal, car }: CarDetailsProps) => {
                     </div>
                   </div>
                   <div className="flex-1 flex flex-col gap-2">
-                    <h2 className="font-semibold text-xl capitalize">
+                    <h2 className="font-semibold text-xl text-center capitalize">
                       {car.make} {car.model}
                     </h2>
                     <div className="mt-3 flex flex-wrap gap-4">

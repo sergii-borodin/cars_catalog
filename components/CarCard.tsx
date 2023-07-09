@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { CarProps } from "@/types";
-import { calculateCarRent } from "@/utils";
+import { calculateCarRent, generateCarImageUrl } from "@/utils";
 import { CustomButton, CarDetails } from "@/components";
 
 interface CarCardProps {
@@ -33,7 +33,7 @@ const CarCard = ({ car }: CarCardProps) => {
       </p>
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
-          src="/hero_img.png"
+          src={generateCarImageUrl(car)}
           alt="car model"
           fill
           priority
@@ -59,7 +59,7 @@ const CarCard = ({ car }: CarCardProps) => {
           </div>
           <div className="car-card__icon">
             <Image src="/gas.svg" width={20} height={20} alt="gas station" />
-            <p className="car-card__icon-text">{city_kmh} km/h</p>
+            <p className="car-card__icon-text">{city_kmh} L/100km</p>
           </div>
         </div>
         <div className="car-card__btn-container">

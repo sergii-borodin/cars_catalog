@@ -8,9 +8,9 @@ const Hero = () => {
 
   return (
     <div className="hero">
-      <div className="flex flex-col items-center text-center pt-36 padding-x">
+      <div className="flex flex-col items-center text-center justify-center pt-36 padding-x">
         <h1 className="hero__title">
-          Find, book, or rent a car - quickly and easily!{" "}
+          Find, book, or rent a car - quickly and easily!
         </h1>
 
         <p className="hero__subtitle">

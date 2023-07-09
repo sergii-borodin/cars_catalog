@@ -1,3 +1,5 @@
+import { CarProps } from "../types";
+
 export async function fetchCars() {
   const headers = {
     "X-RapidAPI-Key": "f100f9dbc5mshb7db7f493238cd2p104256jsne5883d55a3a4",
@@ -5,23 +7,7 @@ export async function fetchCars() {
   };
 
   const response = await fetch(
-    "https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=corolla",
-    { headers: headers }
-  );
-
-  const result = await response.json();
-
-  return result;
-}
-
-export async function fetchCarImage(model?: string, make?: string) {
-  const headers = {
-    "X-RapidAPI-Key": "f100f9dbc5mshb7db7f493238cd2p104256jsne5883d55a3a4",
-    "X-RapidAPI-Host": "car-api2.p.rapidapi.com",
-  };
-
-  const response = await fetch(
-    "https://car-api2.p.rapidapi.com/api/models?model=corolla&sort=id&direction=asc&verbose=yes",
+    "https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=q3",
     { headers: headers }
   );
 
@@ -45,20 +31,16 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
   return rentalRatePerDay.toFixed(0);
 };
 
-// const url =
-//   "https://car-api2.p.rapidapi.com/api/models?model=corolla&sort=id&direction=asc&verbose=yes";
-// const options = {
-//   method: "GET",
-//   headers: {
-//     "X-RapidAPI-Key": "f100f9dbc5mshb7db7f493238cd2p104256jsne5883d55a3a4",
-//     "X-RapidAPI-Host": "car-api2.p.rapidapi.com",
-//   },
-// };
+export const generateCarImageUrl = (car: CarProps, angle?: string) => {
+  const url = new URL("https://cdn.imagin.studio/getimage");
+  const { make, model, year } = car;
 
-// try {
-//   const response = await fetch(url, options);
-//   const result = await response.text();
-//   console.log(result);
-// } catch (error) {
-//   console.error(error);
-// }
+  url.searchParams.append("customer", "hrjavascript-mastery");
+  url.searchParams.append("make", make);
+  url.searchParams.append("modelFamily", model.split(" ")[0]);
+  url.searchParams.append("zoomType", "fullscreen");
+  url.searchParams.append("modelYear", `${year}`);
+  url.searchParams.append("angle", `${angle}`);
+
+  return `${url}`;
+};
